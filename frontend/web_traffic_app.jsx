@@ -1,14 +1,10 @@
 var React = require('react'),
-    ReactDOM = require('react-dom');
+    ReactDOM = require('react-dom'),
+    WebsitesList = require('./components/websites_list.jsx');
 
-var FirstComponent = React.createClass({
-  render: function () {
-    return(
-      <div>Hello Again</div>
-    )
-  }
-});
 
 document.addEventListener("DOMContentLoaded", function () {
-  ReactDOM.render(<FirstComponent />, document.getElementById('main'));
-})
+  ReactDOM.render(<WebsitesList />, document.getElementById('main'));
+});
+
+WebsiteListingStore = require('./stores/website_listing_store.js');
