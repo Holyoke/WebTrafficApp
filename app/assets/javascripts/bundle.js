@@ -19729,6 +19729,16 @@
 	      ),
 	      React.createElement(ListingForm, { listing: this.state.currentListing }),
 	      React.createElement('br', null),
+	      React.createElement(
+	        'p',
+	        null,
+	        'Click on column headers to sort.'
+	      ),
+	      React.createElement(
+	        'span',
+	        null,
+	        'Filter by name, url, rank, or note below.'
+	      ),
 	      React.createElement(Table, { className: 'table', data: data,
 	        sortable: true,
 	        filterable: ['name', 'url', 'rank', 'note'],

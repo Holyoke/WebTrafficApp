@@ -53,6 +53,8 @@ var WebsitesList = React.createClass({
         <ListingForm listing={this.state.currentListing}/>
 
         <br></br>
+        <p>Click on column headers to sort.</p>
+        <span>Filter by name, url, rank, or note below.</span>
         <Table className="table" data={data}
           sortable={true}
           filterable={['name', 'url', 'rank', 'note']}
