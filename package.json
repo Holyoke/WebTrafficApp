@@ -1,0 +1,29 @@
+{
+  "name": "WebTrafficApp2",
+  "version": "1.0.0",
+  "description": "This app scrapes Alexa for analysis.",
+  "main": "index.js",
+  "dependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.2",
+    "babel-preset-react": "^6.5.0",
+    "bootstrap": "^3.3.6",
+    "react": "^0.14.7",
+    "webpack": "^1.12.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Holyoke/WebTrafficApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Holyoke/WebTrafficApp/issues"
+  },
+  "homepage": "https://github.com/Holyoke/WebTrafficApp#readme"
+}
