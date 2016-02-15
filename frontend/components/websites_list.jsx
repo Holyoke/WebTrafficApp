@@ -5,7 +5,10 @@ var React = require('react'),
 
 var WebsitesList = React.createClass({
   getInitialState: function () {
-    return ({websiteListings: WebsiteListingStore.all(), currentPage: 1});
+    return ({websiteListings: WebsiteListingStore.all(),
+             currentPage: 1,
+             currentListing: -1
+           });
   },
 
   websiteListingsChanged: function () {
@@ -35,7 +38,7 @@ var WebsitesList = React.createClass({
   loadForm: function (e) {
     var id = parseInt(e.target.parentElement.children[0].innerHTML);
     var listing = WebsiteListingStore.find(id);
-    console.log("listing: ", listing);
+    this.setState({currentListing: listing});
   },
 
   render: function () {
@@ -46,11 +49,13 @@ var WebsitesList = React.createClass({
         <button onClick={this.handlePrevPageClick}>Prev Page</button>
         <span> {this.state.currentPage} </span>
         <button onClick={this.handleNextPageClick}>Next Page</button>
-        <ListingForm />
+
+        <ListingForm listing={this.state.currentListing}/>
+
         <br></br>
         <Table className="table" data={data}
           sortable={true}
-          filterable={['name', 'url', 'rank']}
+          filterable={['name', 'url', 'rank', 'note']}
           onClick={this.loadForm}
         />
       </div>

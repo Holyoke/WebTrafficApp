@@ -19668,7 +19668,10 @@
 	  displayName: 'WebsitesList',
 	
 	  getInitialState: function () {
-	    return { websiteListings: WebsiteListingStore.all(), currentPage: 1 };
+	    return { websiteListings: WebsiteListingStore.all(),
+	      currentPage: 1,
+	      currentListing: -1
+	    };
 	  },
 	
 	  websiteListingsChanged: function () {
@@ -19698,7 +19701,7 @@
 	  loadForm: function (e) {
 	    var id = parseInt(e.target.parentElement.children[0].innerHTML);
 	    var listing = WebsiteListingStore.find(id);
-	    console.log("listing: ", listing);
+	    this.setState({ currentListing: listing });
 	  },
 	
 	  render: function () {
@@ -19724,11 +19727,11 @@
 	        { onClick: this.handleNextPageClick },
 	        'Next Page'
 	      ),
-	      React.createElement(ListingForm, null),
+	      React.createElement(ListingForm, { listing: this.state.currentListing }),
 	      React.createElement('br', null),
 	      React.createElement(Table, { className: 'table', data: data,
 	        sortable: true,
-	        filterable: ['name', 'url', 'rank'],
+	        filterable: ['name', 'url', 'rank', 'note'],
 	        onClick: this.loadForm
 	      })
 	    );
@@ -21373,7 +21376,7 @@
 	  displayName: "ListingForm",
 	
 	  getInitialState: function () {
-	    return { name: "", url: "", note: "" };
+	    return { name: "", url: "", note: "", id: "" };
 	  },
 	
 	  handleChange: function (e) {
@@ -21386,19 +21389,37 @@
 	    if (e.target.name === 'note') {
 	      this.setState({ note: e.target.value });
 	    }
+	  },
 	
-	    console.log("name:", this.state.name, "note: ", this.state.note);
+	  componentWillReceiveProps: function () {
+	    var listing = this.props.listing;
+	    this.setState({ id: listing.id, name: listing.name, note: listing.note });
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    var id = this.state.id;
+	    var data = {
+	      name: this.state.name,
+	      note: this.state.note
+	    };
+	
+	    WebsiteListingStore.updateWebsiteListing(id, data);
 	  },
 	
 	  render: function () {
 	    return React.createElement(
 	      "form",
-	      null,
-	      "Form:",
+	      { onSubmit: this.handleSubmit },
+	      React.createElement(
+	        "h4",
+	        null,
+	        "Click a data row to edit:"
+	      ),
 	      React.createElement(
 	        "label",
 	        null,
-	        " Name"
+	        "Name: "
 	      ),
 	      React.createElement("input", { type: "text",
 	        value: this.state.name,
@@ -21407,12 +21428,13 @@
 	      React.createElement(
 	        "span",
 	        null,
-	        "Note"
+	        "Note: "
 	      ),
 	      React.createElement("input", { type: "text",
 	        value: this.state.note,
 	        onChange: this.handleChange,
-	        name: "note" })
+	        name: "note" }),
+	      React.createElement("input", { type: "submit", value: "submit" })
 	    );
 	  }
 	});
