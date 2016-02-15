@@ -1,6 +1,7 @@
 var React = require('react'),
     WebsiteListingStore = require('../stores/website_listing_store.js'),
-    Table = require('reactable').Table;
+    Table = require('reactable').Table,
+    ListingForm = require('./listing_form.jsx');
 
 var WebsitesList = React.createClass({
   getInitialState: function () {
@@ -39,9 +40,12 @@ var WebsitesList = React.createClass({
         <button onClick={this.handlePrevPageClick}>Prev Page</button>
         <span> {this.state.currentPage} </span>
         <button onClick={this.handleNextPageClick}>Next Page</button>
+        <ListingForm />
+        <br></br>
         <Table className="table" data={data}
           sortable={true}
-          filterable={['name', 'url', 'rank']} />
+          filterable={['name', 'url', 'rank']}
+        />
       </div>
     )
   }
