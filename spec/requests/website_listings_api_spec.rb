@@ -29,8 +29,28 @@ RSpec.describe "WebsiteListing API Controller", :type => :request do
 
       expect(response).to be_success
       expect(json.length).to eq(25)
+
+      byebug
+      expect(json).to eq(WebsiteListing.take(25).to_json)
     end
-    
-    it "shows the second page with 25 results"
+
+    it "shows second 25 results with parameter" do
+      get "/api/website_listings?page=2"
+
+      json = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(json.length).to eq(25)
+
+      expect(json).to eq(WebsiteListing.drop(25).to_json)
+    end
+  end
+
+  it "updates a record" do
+    FactoryGirl.create(:website_listing)
+
+    post "/api/website", :website_listing => { name: "test"}
+
+    expect(WebsiteListing.first.name).to eq("test")
   end
 end
