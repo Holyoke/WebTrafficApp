@@ -21,7 +21,11 @@ var WebsitesList = React.createClass({
     var data = this.state.websiteListings;
 
     return(
-      <Table className="table" data={data} />
+      <div id="list">
+        <Table className="table" data={data}
+          sortable={true}
+          filterable={['name', 'url', 'rank']} />
+      </div>
     )
   }
 });

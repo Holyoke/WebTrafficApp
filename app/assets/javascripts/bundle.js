@@ -19683,7 +19683,13 @@
 	  render: function () {
 	    var data = this.state.websiteListings;
 	
-	    return React.createElement(Table, { className: 'table', data: data });
+	    return React.createElement(
+	      'div',
+	      { id: 'list' },
+	      React.createElement(Table, { className: 'table', data: data,
+	        sortable: true,
+	        filterable: ['name', 'url', 'rank'] })
+	    );
 	  }
 	});
 	
