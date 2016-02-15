@@ -19667,7 +19667,7 @@
 	  displayName: 'WebsitesList',
 	
 	  getInitialState: function () {
-	    return { websiteListings: WebsiteListingStore.all() };
+	    return { websiteListings: WebsiteListingStore.all(), currentPage: 1 };
 	  },
 	
 	  websiteListingsChanged: function () {
@@ -19677,7 +19677,21 @@
 	
 	  componentDidMount: function () {
 	    WebsiteListingStore.addChangedHandler(this.websiteListingsChanged);
-	    WebsiteListingStore.fetch();
+	    WebsiteListingStore.fetch(this.state.currentPage);
+	  },
+	
+	  handleNextPageClick: function () {
+	    if (this.state.currentPage < 4) {
+	      this.setState({ currentPage: this.state.currentPage + 1 });
+	      WebsiteListingStore.fetch(this.state.currentPage + 1);
+	    }
+	  },
+	
+	  handlePrevPageClick: function () {
+	    if (this.state.currentPage > 1) {
+	      this.setState({ currentPage: this.state.currentPage - 1 });
+	      WebsiteListingStore.fetch(this.state.currentPage - 1);
+	    }
 	  },
 	
 	  render: function () {
@@ -19686,6 +19700,23 @@
 	    return React.createElement(
 	      'div',
 	      { id: 'list' },
+	      React.createElement(
+	        'button',
+	        { onClick: this.handlePrevPageClick },
+	        'Prev Page'
+	      ),
+	      React.createElement(
+	        'span',
+	        null,
+	        ' ',
+	        this.state.currentPage,
+	        ' '
+	      ),
+	      React.createElement(
+	        'button',
+	        { onClick: this.handleNextPageClick },
+	        'Next Page'
+	      ),
 	      React.createElement(Table, { className: 'table', data: data,
 	        sortable: true,
 	        filterable: ['name', 'url', 'rank'] })

@@ -4,7 +4,7 @@ var React = require('react'),
 
 var WebsitesList = React.createClass({
   getInitialState: function () {
-    return ({websiteListings: WebsiteListingStore.all()});
+    return ({websiteListings: WebsiteListingStore.all(), currentPage: 1});
   },
 
   websiteListingsChanged: function () {
@@ -14,7 +14,21 @@ var WebsitesList = React.createClass({
 
   componentDidMount: function () {
     WebsiteListingStore.addChangedHandler(this.websiteListingsChanged);
-    WebsiteListingStore.fetch();
+    WebsiteListingStore.fetch(this.state.currentPage);
+  },
+
+  handleNextPageClick: function () {
+    if (this.state.currentPage < 4) {
+      this.setState({currentPage: (this.state.currentPage + 1)});
+      WebsiteListingStore.fetch(this.state.currentPage + 1);
+    }
+  },
+
+  handlePrevPageClick: function () {
+    if (this.state.currentPage > 1) {
+      this.setState({currentPage: (this.state.currentPage - 1)});
+      WebsiteListingStore.fetch(this.state.currentPage - 1);
+    }
   },
 
   render: function () {
@@ -22,6 +36,9 @@ var WebsitesList = React.createClass({
 
     return(
       <div id="list">
+        <button onClick={this.handlePrevPageClick}>Prev Page</button>
+        <span> {this.state.currentPage} </span>
+        <button onClick={this.handleNextPageClick}>Next Page</button>
         <Table className="table" data={data}
           sortable={true}
           filterable={['name', 'url', 'rank']} />
