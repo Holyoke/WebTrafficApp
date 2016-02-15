@@ -19695,6 +19695,12 @@
 	    }
 	  },
 	
+	  loadForm: function (e) {
+	    var id = parseInt(e.target.parentElement.children[0].innerHTML);
+	    var listing = WebsiteListingStore.find(id);
+	    console.log("listing: ", listing);
+	  },
+	
 	  render: function () {
 	    var data = this.state.websiteListings;
 	
@@ -19722,7 +19728,8 @@
 	      React.createElement('br', null),
 	      React.createElement(Table, { className: 'table', data: data,
 	        sortable: true,
-	        filterable: ['name', 'url', 'rank']
+	        filterable: ['name', 'url', 'rank'],
+	        onClick: this.loadForm
 	      })
 	    );
 	  }
