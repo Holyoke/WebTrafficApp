@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "required": ["website_listings"],
+  "properties": {
+    "website_listings": {
+      "type": "array",
+      "items":{
+        "required": ["id", "name", "url"],
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    }
+  }
+}
