@@ -37,9 +37,12 @@ var WebsitesList = React.createClass({
   },
 
   loadForm: function (e) {
+    if (e.target.parentElement.classList[0] === "reactable-column-header") {
+      return;
+    }
+
     var id = parseInt(e.target.parentElement.children[0].innerHTML);
     var listing = WebsiteListingStore.find(id);
-
     this.setState({currentListing: listing, openModal: true});
   },
 
