@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react'),
+    Modal = require('react-bootstrap').Modal;
 
 var ListingForm = React.createClass({
   getInitialState: function () {
@@ -18,8 +19,8 @@ var ListingForm = React.createClass({
     }
   },
 
-  componentWillReceiveProps: function (){
-    var listing = this.props.listing;
+  componentWillReceiveProps: function (nextProps){
+    var listing = nextProps.listing;
     this.setState({id: listing.id, name: listing.name, note: listing.note});
   },
 
@@ -32,29 +33,32 @@ var ListingForm = React.createClass({
     };
 
     WebsiteListingStore.updateWebsiteListing(id, data);
+    this.props.onSubmit();
   },
 
   render: function () {
     return(
-      <form onSubmit={this.handleSubmit}>
-        <h4>
-          Click a data row to edit:
-        </h4>
+      <Modal show={this.props.show} onHide={this.props.onHide}>
+        <form onSubmit={this.handleSubmit}>
+          <h4>
+            Edit record
+          </h4>
 
-        <label>Name: </label>
-        <input type="text"
-          value={this.state.name}
-          onChange={this.handleChange}
-          name="name" />
+          <label>Name: </label>
+          <input type="text"
+            value={this.state.name}
+            onChange={this.handleChange}
+            name="name" />
 
-        <span>Note: </span>
-        <input type="text"
-          value={this.state.note}
-          onChange={this.handleChange}
-          name="note" />
+          <span>Note: </span>
+          <input type="text"
+            value={this.state.note}
+            onChange={this.handleChange}
+            name="note" />
 
-        <input type="submit" value="submit" />
-      </form>
+          <input type="submit" value="submit" />
+        </form>
+      </Modal>
     )
   }
 });

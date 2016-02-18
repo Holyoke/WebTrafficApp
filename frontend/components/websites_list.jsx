@@ -7,7 +7,8 @@ var WebsitesList = React.createClass({
   getInitialState: function () {
     return ({websiteListings: WebsiteListingStore.all(),
              currentPage: 1,
-             currentListing: -1
+             currentListing: -1,
+             openModal: false
            });
   },
 
@@ -38,11 +39,22 @@ var WebsitesList = React.createClass({
   loadForm: function (e) {
     var id = parseInt(e.target.parentElement.children[0].innerHTML);
     var listing = WebsiteListingStore.find(id);
-    this.setState({currentListing: listing});
+
+    this.setState({currentListing: listing, openModal: true});
+  },
+
+  //modal
+  openModal: function () {
+    this.setState({openModal: true});
+  },
+
+  closeModal: function () {
+    this.setState({openModal: false});
   },
 
   render: function () {
     var data = this.state.websiteListings;
+    var that = this;
 
     return(
       <div id="list">
@@ -50,7 +62,11 @@ var WebsitesList = React.createClass({
         <span> {this.state.currentPage} </span>
         <button onClick={this.handleNextPageClick}>Next Page</button>
 
-        <ListingForm listing={this.state.currentListing}/>
+        <ListingForm listing={this.state.currentListing}
+          onSubmit={that.closeModal}
+          show={this.state.openModal}
+          onHide={that.closeModal} />
+
 
         <br></br>
         <p>Click on column headers to sort.</p>
