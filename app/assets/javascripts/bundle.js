@@ -19700,7 +19700,8 @@
 	  },
 	
 	  loadForm: function (e) {
-	    if (e.target.parentElement.classList[0] === "reactable-column-header") {
+	    var targets = [].slice.call(e.target.classList);
+	    if (targets.includes("reactable-filter-input") || targets.includes("reactable-header-sortable")) {
 	      return;
 	    }
 	
