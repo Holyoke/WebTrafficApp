@@ -33,4 +33,10 @@ RSpec.describe WebsiteListing, type: :model do
 
     expect(listing.parse_html).to_not be_empty
   end
+
+  it "takes a screencap" do
+    listing = WebsiteListing.create({name: "Google", url: "Google.com"})
+
+    expect(listing.screencap).to be_kind_of(MiniMagick::Image)
+  end
 end

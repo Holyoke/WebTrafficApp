@@ -19,6 +19,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'kaminari'
 gem "twitter-bootstrap-rails"
+gem 'webshot'
 
 group :development do
   gem 'web-console', '~> 2.0'

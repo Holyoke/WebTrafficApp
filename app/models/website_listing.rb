@@ -25,4 +25,10 @@ class WebsiteListing < ActiveRecord::Base
 
     doc.to_html
   end
+
+  def screencap
+    url = "http://" + self.url
+    ws = Webshot::Screenshot.instance
+    ws.capture(url, "./app/assets/images/screencaps/#{self.name}.png")
+  end
 end

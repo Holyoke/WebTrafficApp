@@ -4,7 +4,6 @@ class StaticPagesController < ApplicationController
 
   def show
     w = WebsiteListing.find(params[:id])
-    html = w.parse_html.html_safe
-    render text: html
+    render :show
   end
 end
