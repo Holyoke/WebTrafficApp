@@ -4,10 +4,7 @@ require "byebug"
 RSpec.describe "WebsiteListing API Controller", :type => :request do
 
   let(:keys) do
-    keys = WebsiteListing.column_names
-    keys.delete("created_at")
-    keys.delete("updated_at")
-    keys
+    keys = %w{name url rank notequit}
   end
 
   it "responses with a collection of website records" do
@@ -18,12 +15,13 @@ RSpec.describe "WebsiteListing API Controller", :type => :request do
     listings = WebsiteListing.all
 
     get "/api/website_listings"
+
     json = JSON.parse(response.body)
+    json = json["website_listings"]
 
     # test for the 200 status-code
     expect(response).to be_success
     expect(json.length).to eq(25)
-
     # iterate and match each one
     json.each_with_index do |item, idx|
       listing = listings[idx]
@@ -43,6 +41,7 @@ RSpec.describe "WebsiteListing API Controller", :type => :request do
 
       listings = WebsiteListing.page(1)
       json = JSON.parse(response.body)
+      json = json["website_listings"]
 
       expect(response).to be_success
       expect(json.length).to eq(25)
@@ -61,6 +60,7 @@ RSpec.describe "WebsiteListing API Controller", :type => :request do
 
       listings = WebsiteListing.page(2)
       json = JSON.parse(response.body)
+      json = json["website_listings"]
 
       expect(response).to be_success
       expect(json.length).to eq(25)
