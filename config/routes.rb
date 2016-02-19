@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :website_listings, only: [:index, :update]
   end
+
+  resources :static_pages, only: [:show]
 end
